@@ -1,7 +1,9 @@
+'''Задача пройти по списку ссылок и получить все адреса элетронной почты на сайтах. Не только те что указаны ссыдками,
+но и встречатся просто в тексте'''
+
 import bs4
 import re
 from langdetect import detect
-
 from pip._vendor import requests
 
 
@@ -20,8 +22,6 @@ def take_adress(file_name ,dic):
     f.close()
     return dic
 
-
-
 def take_text(soup, file_name, dic):
     #забирает с сайта с именем name вессть текст
     email =[] #список адресов
@@ -30,7 +30,7 @@ def take_text(soup, file_name, dic):
     temp =''
     lng = language(soup) #передаем содержимое на определение языка
     for i in soup.find_all('a', href=True): #вытаскиваем все ссылки
-        if 'mailto' in i['href'] #если есть ссылка с текстом mailto
+        if 'mailto' in i['href']: #если есть ссылка с текстом mailto
             temp = i['href'][7:]
         links.append(i['href']) #собирает все ссылки со страницы
     for i in range(len(links)-1, -1, -1): #убираем ссылки на внешние ресурсы и на index
@@ -49,7 +49,6 @@ def take_text(soup, file_name, dic):
             del email[i]
     dic[file_name] = [email, lng]
     return (dic)
-
 
 def poisk_tags(url_of):
     # Ищет на странице все что может быть адресом электронной почты
@@ -71,7 +70,8 @@ def language(soup):
     #print(s)
     return s
 
-
+def write_in_file(dic):
+    pass
 
 dic = {}
 file = 'adres.txt' #файл со списком адресов
